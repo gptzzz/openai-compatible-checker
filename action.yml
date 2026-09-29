@@ -67,8 +67,8 @@ runs:
         OACHECK_RUNS: ${{ inputs.runs }}
         OACHECK_REPORT: ${{ runner.temp }}/openai-compatible-checker/report.json
       run: |
-        # Inputs arrive through environment variables, never through ${{ }} in
-        # the script body, so they cannot inject shell code.
+        # Inputs arrive through environment variables, never through expression
+        # syntax in the script body, so they cannot inject shell code.
         py=""
         for candidate in python3 python; do
           if command -v "$candidate" >/dev/null 2>&1 &&

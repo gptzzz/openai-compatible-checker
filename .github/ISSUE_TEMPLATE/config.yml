@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security issue / 安全问题
+    url: https://github.com/gptzzz/openai-compatible-checker/security/advisories/new
+    about: Report vulnerabilities privately. Never post API keys in issues. 请私下报告漏洞，不要在 Issue 里贴 Key。

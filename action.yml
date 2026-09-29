@@ -1,0 +1,125 @@
+name: OpenAI-compatible API checker
+description: >-
+  Check an OpenAI-compatible API endpoint (models, SSE streaming, tool calls,
+  JSON mode, Responses API, images, error bodies, latency). Writes a redacted
+  JSON report artifact and a job summary. Checks protocol compatibility only.
+author: GPTZZZ
+branding:
+  icon: check-circle
+  color: green
+
+inputs:
+  base-url:
+    description: API prefix to check, for example https://api.example.com/v1
+    required: true
+  model:
+    description: Model ID. Required for every profile except a models-only check.
+    required: false
+    default: ""
+  profile:
+    description: basic, codex, agent or full. See README for what each one runs.
+    required: false
+    default: basic
+  api-key-env:
+    description: >-
+      Name of the environment variable that holds the API key. Set that
+      variable from a secret with `env:` on this step; the key is never an input.
+    required: false
+    default: OPENAI_API_KEY
+  runs:
+    description: Sequential requests for the latency check (1-50). Only used when the profile includes latency.
+    required: false
+    default: "5"
+  artifact-name:
+    description: Name of the uploaded report artifact. Must be unique within a workflow run.
+    required: false
+    default: openai-compatible-checker-report
+  fail-on-error:
+    description: Fail the step when any check fails ("true" or "false").
+    required: false
+    default: "true"
+
+outputs:
+  status:
+    description: ok, degraded or failed
+    value: ${{ steps.check.outputs.status }}
+  passed:
+    description: Number of checks that passed
+    value: ${{ steps.check.outputs.passed }}
+  failed:
+    description: Number of checks that failed
+    value: ${{ steps.check.outputs.failed }}
+  report-path:
+    description: Path of the JSON report on the runner
+    value: ${{ steps.check.outputs.report-path }}
+
+runs:
+  using: composite
+  steps:
+    - name: Run openai-compatible-checker
+      id: check
+      shell: bash
+      env:
+        OACHECK_BASE_URL: ${{ inputs.base-url }}
+        OACHECK_MODEL: ${{ inputs.model }}
+        OACHECK_PROFILE: ${{ inputs.profile }}
+        OACHECK_KEY_ENV: ${{ inputs.api-key-env }}
+        OACHECK_RUNS: ${{ inputs.runs }}
+        OACHECK_REPORT: ${{ runner.temp }}/openai-compatible-checker/report.json
+      run: |
+        # Inputs arrive through environment variables, never through ${{ }} in
+        # the script body, so they cannot inject shell code.
+        py=""
+        for candidate in python3 python; do
+          if command -v "$candidate" >/dev/null 2>&1 &&
+             "$candidate" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)' >/dev/null 2>&1; then
+            py="$candidate"
+            break
+          fi
+        done
+        if [ -z "$py" ]; then
+          echo "::error title=openai-compatible-checker::Python 3.10 or newer is required. Add actions/setup-python before this step."
+          exit 2
+        fi
+        args=(
+          --base-url "$OACHECK_BASE_URL"
+          --profile "$OACHECK_PROFILE"
+          --api-key-env "$OACHECK_KEY_ENV"
+          --runs "$OACHECK_RUNS"
+          --format json
+          --output "$OACHECK_REPORT"
+        )
+        if [ -n "$OACHECK_MODEL" ]; then
+          args+=(--model "$OACHECK_MODEL")
+        fi
+        set +e
+        "$py" "$GITHUB_ACTION_PATH/openai_compatible_checker.py" "${args[@]}"
+        code=$?
+        set -e
+        echo "exit-code=$code" >> "$GITHUB_OUTPUT"
+        if [ -f "$OACHECK_REPORT" ]; then
+          echo "report-path=$OACHECK_REPORT" >> "$GITHUB_OUTPUT"
+          "$py" -c 'import json, sys; s = json.load(open(sys.argv[1], encoding="utf-8"))["summary"]; print("status=%s\npassed=%d\nfailed=%d" % (s["status"], s["passed"], s["failed"]))' "$OACHECK_REPORT" >> "$GITHUB_OUTPUT"
+        fi
+        if [ "$code" = "2" ]; then
+          echo "::error title=openai-compatible-checker::invalid inputs or missing API key environment variable (see the log above)"
+          exit 2
+        fi
+
+    - name: Upload report
+      if: always() && steps.check.outputs.report-path != ''
+      uses: actions/upload-artifact@v7
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ steps.check.outputs.report-path }}
+        if-no-files-found: warn
+
+    - name: Fail when a check failed
+      if: inputs.fail-on-error == 'true' && steps.check.outputs.exit-code == '1'
+      shell: bash
+      env:
+        OACHECK_STATUS: ${{ steps.check.outputs.status }}
+        OACHECK_FAILED: ${{ steps.check.outputs.failed }}
+      run: |
+        echo "::error title=openai-compatible-checker::$OACHECK_FAILED check(s) failed (status: $OACHECK_STATUS). See the job summary and the report artifact."
+        exit 1

@@ -1,0 +1,63 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openai-compatible-checker"
+dynamic = ["version"]
+description = "API relay / gateway checker for OpenAI-compatible APIs: models, SSE streaming, tool calls, JSON mode, Responses API (Codex), images, error bodies and TTFT. Protocol compatibility only."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "GPTZZZ" }]
+keywords = [
+  "openai-compatible",
+  "api-testing",
+  "api-relay",
+  "llm-gateway",
+  "responses-api",
+  "server-sent-events",
+  "conformance",
+  "codex",
+  "ttft",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: System Administrators",
+  "Natural Language :: Chinese (Simplified)",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Internet :: WWW/HTTP",
+  "Topic :: Software Development :: Testing",
+  "Topic :: System :: Monitoring",
+]
+dependencies = []
+
+[project.scripts]
+oacheck = "openai_compatible_checker:main"
+openai-compatible-checker = "openai_compatible_checker:main"
+
+[project.urls]
+Homepage = "https://github.com/gptzzz/openai-compatible-checker"
+Documentation = "https://github.com/gptzzz/openai-compatible-checker/tree/main/docs"
+Changelog = "https://github.com/gptzzz/openai-compatible-checker/blob/main/CHANGELOG.md"
+Issues = "https://github.com/gptzzz/openai-compatible-checker/issues"
+
+[tool.setuptools]
+py-modules = ["openai_compatible_checker"]
+
+[tool.setuptools.dynamic]
+version = { attr = "openai_compatible_checker.__version__" }
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"

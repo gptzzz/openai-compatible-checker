@@ -1,0 +1,66 @@
+# Daily conformance check of YOUR OWN OpenAI-compatible gateway.
+#
+# Copy this file to .github/workflows/api-gateway-monitor.yml in your repository, then:
+#   1. Settings > Secrets and variables > Actions > Secrets > New repository secret
+#        GATEWAY_API_KEY   a dedicated key with a small spending limit
+#   2. Settings > Secrets and variables > Actions > Variables > New repository variable
+#        GATEWAY_BASE_URL  https://api.example.com/v1
+#        GATEWAY_MODEL     your-model-id
+#
+# Cost: every run sends real, billed requests. Profile "full" with runs 5 sends
+# 14 short generation requests per run, about 420 a month on this daily
+# schedule. Use profile "basic" (2 requests) or a lower frequency if that is
+# too much. GET /models and the fake-key request are usually free; check your
+# provider's pricing.
+#
+# Secrets: the key goes in through `env:` from Secrets. GitHub masks it in logs,
+# and the checker never writes it to the report, the job summary or the artifact.
+#
+# Notes:
+#   - Scheduled runs can be delayed at busy times such as the start of each
+#     hour, so this uses minute 17.
+#   - In public repositories GitHub disables scheduled workflows after 60 days
+#     without repository activity. Re-enable it from the Actions tab if needed.
+#   - For stronger supply-chain guarantees, replace @v2 with a full commit SHA.
+
+name: API gateway monitor
+
+on:
+  schedule:
+    - cron: "17 1 * * *"  # every day at 01:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: api-gateway-monitor
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check the gateway
+        id: oacheck
+        uses: gptzzz/openai-compatible-checker@v2
+        env:
+          OPENAI_API_KEY: ${{ secrets.GATEWAY_API_KEY }}
+        with:
+          base-url: ${{ vars.GATEWAY_BASE_URL }}
+          model: ${{ vars.GATEWAY_MODEL }}
+          profile: full
+          runs: "5"
+          artifact-name: oacheck-report-${{ github.run_id }}
+
+      # Optional: act on the outputs, e.g. only warn on partial failures.
+      # The step above already fails the job when any check fails; set
+      # fail-on-error: "false" there if you prefer to decide here.
+      - name: Show the result
+        if: always()
+        env:
+          STATUS: ${{ steps.oacheck.outputs.status }}
+          PASSED: ${{ steps.oacheck.outputs.passed }}
+          FAILED: ${{ steps.oacheck.outputs.failed }}
+        run: echo "status=$STATUS passed=$PASSED failed=$FAILED"

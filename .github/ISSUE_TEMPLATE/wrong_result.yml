@@ -1,0 +1,33 @@
+name: Wrong check result / 检测结果有误
+description: A check passed or failed when it should not have (false positive or false negative). 误报或漏报。
+labels: [check-accuracy]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Checks follow public protocol documents and mainstream client source code, and treat every provider the same way. Requests for provider-specific exceptions will be closed.
+        检查以公开协议文档和主流客户端源码为依据，对所有服务商一视同仁。针对单个服务商放宽规则的请求会被关闭。
+
+        **Do not paste API keys or `--include-content` reports.** 请勿粘贴 Key 或带正文的报告。
+  - type: dropdown
+    id: check
+    attributes:
+      label: Check / 检查项
+      options: [models, chat, stream, stream_usage, tools, json_mode, responses, image, image_url, error_shape, latency]
+    validations:
+      required: true
+  - type: textarea
+    id: report
+    attributes:
+      label: Redacted report excerpt / 脱敏报告片段
+      description: The JSON object of that check from the default report. 默认报告中该检查的 JSON。
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result and reference / 你认为正确的结果及依据
+      description: Link the protocol documentation or client source code that supports it. 附上协议文档或客户端源码链接。
+    validations:
+      required: true

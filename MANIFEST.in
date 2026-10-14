@@ -3,3 +3,4 @@ include ai_api_relay_checker.py action.yml
 recursive-include tests *.py
 recursive-include docs *.md
 recursive-include examples *.json *.md *.yml
+recursive-include tools *.py

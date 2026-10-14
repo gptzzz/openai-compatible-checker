@@ -8,7 +8,9 @@ All notable changes are listed here. The migration notes for 1.x users are in bo
 
 ### Changed
 
-- 暂无。
+- 增加 wheel 隔离安装验证：两个命令行入口、四种 profile、异常响应分类、脱敏及缺 Key 退出码，全部使用本地 mock。
+- CI 和发布构建在打包后执行同一验证；源码包包含验证工具和测试。
+- 补齐 README 引用的 JSON 报告样例，明确标注为离线 mock 结果，并提供重建命令。
 
 ## [2.0.0] - 2026-09-29
 

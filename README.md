@@ -141,7 +141,7 @@ oacheck --base-url https://api.example.com/v1 --model your-model-id --profile co
 | error\_shape | PASS | 401 | 3 ms | HTTP 401, body shape openai\_nested |
 | latency | PASS | - | 513 ms | 5 runs, TTFT p50/p95 387 ms / 396 ms, total p50/p95 513 ms / 529 ms, errors 0 |
 
-JSON 报告的顶层结构（完整样例见 [examples/report-sample.json](examples/report-sample.json)）：
+JSON 报告的顶层结构（完整样例见 [examples/report-sample.json](examples/report-sample.json)；该文件明确标注为本地 mock 结果，不代表任何真实服务的测试）：
 
 ```json
 {
@@ -353,6 +353,8 @@ Each run sends a few billed requests. See [docs/](docs/) for per-check details (
 Maintained by the GPTZZZ team, who run an OpenAI-compatible gateway. The checker treats every provider the same way, and all of its logic is in this repository. It is not affiliated with or endorsed by OpenAI; the name only says which API protocol it checks.
 
 ## 参与贡献
+
+发布前还可以在隔离环境验证 wheel 的安装、四种 profile、异常响应和脱敏；见 [离线安装包验证](docs/offline-distribution-verification.md)。这套验证不需要真实 Key，也不表示真实服务兼容性已验证。
 
 欢迎提交新的检查项、误报案例和文档修正，流程见 [CONTRIBUTING.md](CONTRIBUTING.md)。测试不需要真实 Key，也不访问外网，只连仓库自带的本地 mock 网关：`python3 -m unittest discover -s tests -v`。版本变化见 [CHANGELOG.md](CHANGELOG.md)，安全问题请按 [SECURITY.md](SECURITY.md) 私下报告。本项目使用 [MIT License](LICENSE)。
 

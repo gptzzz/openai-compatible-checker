@@ -1,0 +1,321 @@
+{
+  "sample_provenance": {
+    "kind": "offline_mock_only",
+    "live_service_tested": false,
+    "description": "Generated from the repository's loopback mock. Not a live service compatibility result.",
+    "reproduce": "python tools/smoke_distribution.py --wheel dist/<wheel>.whl --sample-json <path>"
+  },
+  "checks": [
+    {
+      "content_type": "application/json; charset=utf-8",
+      "endpoint": "http://127.0.0.1:41653/ok/v1/models",
+      "latency_ms": 2.63,
+      "model_count": 2,
+      "model_ids_sample": [
+        "gpt-test",
+        "other-model"
+      ],
+      "model_ids_truncated": false,
+      "name": "models",
+      "ok": true,
+      "request_id": "req-local-123",
+      "status_code": 200,
+      "target_model_present": true
+    },
+    {
+      "content_chars": 22,
+      "content_sha256": "3f0080cfe345344b436112f7559c2a0a6038bda13a56e2c6365bf5113ca8fdcf",
+      "content_type": "application/json; charset=utf-8",
+      "endpoint": "http://127.0.0.1:41653/ok/v1/chat/completions",
+      "finish_reason": "stop",
+      "latency_ms": 0.759,
+      "name": "chat",
+      "ok": true,
+      "request_id": "req-local-123",
+      "response_id": "chatcmpl-local",
+      "status_code": 200,
+      "usage": {
+        "completion_tokens": 3,
+        "prompt_tokens": 7,
+        "total_tokens": 10
+      }
+    },
+    {
+      "choice_event_count": 4,
+      "completed": true,
+      "content_chars": 19,
+      "content_sha256": "9cbcfd1a4eb0f7a9f9d47c5c3bd36369619e942ed61f3de077fc5ef1bf84a988",
+      "content_type": "text/event-stream; charset=utf-8",
+      "delta_event_count": 2,
+      "endpoint": "http://127.0.0.1:41653/ok/v1/chat/completions",
+      "event_count": 5,
+      "finish_reason": "stop",
+      "first_event_ms": 0.61,
+      "json_event_count": 4,
+      "latency_ms": 0.727,
+      "name": "stream",
+      "ok": true,
+      "request_id": "req-stream-local",
+      "status_code": 200,
+      "ttft_ms": 0.661
+    },
+    {
+      "choice_event_count": 4,
+      "completed": true,
+      "content_chars": 19,
+      "content_sha256": "9cbcfd1a4eb0f7a9f9d47c5c3bd36369619e942ed61f3de077fc5ef1bf84a988",
+      "content_type": "text/event-stream; charset=utf-8",
+      "delta_event_count": 2,
+      "endpoint": "http://127.0.0.1:41653/ok/v1/chat/completions",
+      "event_count": 6,
+      "finish_reason": "stop",
+      "first_event_ms": 0.584,
+      "json_event_count": 5,
+      "latency_ms": 0.774,
+      "name": "stream_usage",
+      "ok": true,
+      "request_id": "req-stream-local",
+      "status_code": 200,
+      "ttft_ms": 0.683,
+      "usage": {
+        "completion_tokens": 3,
+        "prompt_tokens": 7,
+        "total_tokens": 10
+      },
+      "usage_chunk_choices_empty": true
+    },
+    {
+      "argument_keys": [
+        "city"
+      ],
+      "city_argument_present": true,
+      "content_type": "application/json; charset=utf-8",
+      "endpoint": "http://127.0.0.1:41653/ok/v1/chat/completions",
+      "finish_reason": "tool_calls",
+      "latency_ms": 0.889,
+      "name": "tools",
+      "ok": true,
+      "request_id": "req-local-123",
+      "response_id": "chatcmpl-local",
+      "roundtrip": {
+        "content_chars": 30,
+        "content_sha256": "88cbf308bad8a50fb2cd300a5d9c4d3e1de2112fe7ec0ecb584862d644bc3d83",
+        "content_type": "application/json; charset=utf-8",
+        "finish_reason": "stop",
+        "latency_ms": 0.596,
+        "mentions_tool_result": true,
+        "ok": true,
+        "request_id": "req-local-123",
+        "response_id": "chatcmpl-local",
+        "status_code": 200,
+        "usage": {
+          "completion_tokens": 3,
+          "prompt_tokens": 7,
+          "total_tokens": 10
+        }
+      },
+      "status_code": 200,
+      "tool_call_count": 1,
+      "tool_call_ids_have_call_prefix": true,
+      "usage": {
+        "completion_tokens": 3,
+        "prompt_tokens": 7,
+        "total_tokens": 10
+      }
+    },
+    {
+      "content_chars": 24,
+      "content_sha256": "8ab33f7d0fe2eb7dfce1262d703ac4b1de8293f35c7bdb1d55bc823227085b6f",
+      "content_type": "application/json; charset=utf-8",
+      "endpoint": "http://127.0.0.1:41653/ok/v1/chat/completions",
+      "finish_reason": "stop",
+      "json_keys": [
+        "n",
+        "status"
+      ],
+      "latency_ms": 0.697,
+      "name": "json_mode",
+      "ok": true,
+      "request_id": "req-local-123",
+      "response_id": "chatcmpl-local",
+      "status_code": 200,
+      "usage": {
+        "completion_tokens": 3,
+        "prompt_tokens": 7,
+        "total_tokens": 10
+      }
+    },
+    {
+      "content_chars": 2,
+      "content_sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+      "content_type": "application/json; charset=utf-8",
+      "endpoint": "http://127.0.0.1:41653/ok/v1/responses",
+      "latency_ms": 0.528,
+      "name": "responses",
+      "ok": true,
+      "output_item_types": [
+        "message"
+      ],
+      "request_id": "req-local-123",
+      "response_id": "resp_local",
+      "status": "completed",
+      "status_code": 200,
+      "stream": {
+        "content_chars": 2,
+        "content_sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+        "content_type": "text/event-stream; charset=utf-8",
+        "event_count": 8,
+        "event_types": {
+          "response.completed": 1,
+          "response.created": 1,
+          "response.in_progress": 1,
+          "response.output_item.added": 1,
+          "response.output_item.done": 1,
+          "response.output_text.delta": 2,
+          "response.output_text.done": 1
+        },
+        "first_event_ms": 0.58,
+        "latency_ms": 0.916,
+        "ok": true,
+        "output_item_done_types": [
+          "message"
+        ],
+        "output_text_delta_count": 2,
+        "request_id": "req-stream-local",
+        "response_completed": true,
+        "status_code": 200,
+        "ttft_ms": 0.754,
+        "usage": {
+          "input_tokens": 9,
+          "input_tokens_details.cached_tokens": 0,
+          "output_tokens": 2,
+          "output_tokens_details.reasoning_tokens": 0,
+          "total_tokens": 11
+        }
+      },
+      "usage": {
+        "input_tokens": 9,
+        "input_tokens_details.cached_tokens": 0,
+        "output_tokens": 2,
+        "output_tokens_details.reasoning_tokens": 0,
+        "total_tokens": 11
+      }
+    },
+    {
+      "color_named": true,
+      "content_chars": 3,
+      "content_sha256": "ba19e9c3d5f49882ddaafed4f286a8a81491150426d321179270e27e74a89097",
+      "content_type": "application/json; charset=utf-8",
+      "endpoint": "http://127.0.0.1:41653/ok/v1/chat/completions",
+      "finish_reason": "stop",
+      "image_bytes": 74,
+      "image_format": "png 8x8 base64 data URL",
+      "latency_ms": 1.177,
+      "name": "image",
+      "ok": true,
+      "request_id": "req-local-123",
+      "response_id": "chatcmpl-local",
+      "status_code": 200,
+      "usage": {
+        "completion_tokens": 3,
+        "prompt_tokens": 7,
+        "total_tokens": 10
+      }
+    },
+    {
+      "content_type": "application/json; charset=utf-8",
+      "endpoint": "http://127.0.0.1:41653/ok/v1/models",
+      "error_code": "invalid_api_key",
+      "error_message_present": true,
+      "error_shape": "openai_nested",
+      "error_type": "invalid_request_error",
+      "latency_ms": 0.967,
+      "name": "error_shape",
+      "ok": true,
+      "probe_key": "fixed invalid key (not yours)",
+      "request_id": "req-local-123",
+      "status_code": 401
+    },
+    {
+      "endpoint": "http://127.0.0.1:41653/ok/v1/chat/completions",
+      "error_rate": 0.0,
+      "errors": {},
+      "failed": 0,
+      "latency_ms": 0.733,
+      "mode": "sequential, one request at a time",
+      "name": "latency",
+      "ok": true,
+      "percentile_method": "nearest-rank over successful runs",
+      "runs": 2,
+      "samples": [
+        {
+          "ok": true,
+          "run": 1,
+          "total_ms": 0.733,
+          "ttft_ms": 0.673
+        },
+        {
+          "ok": true,
+          "run": 2,
+          "total_ms": 0.78,
+          "ttft_ms": 0.725
+        }
+      ],
+      "succeeded": 2,
+      "total_ms": {
+        "count": 2,
+        "max": 0.78,
+        "min": 0.733,
+        "p50": 0.733,
+        "p95": 0.78
+      },
+      "ttft_ms": {
+        "count": 2,
+        "max": 0.725,
+        "min": 0.673,
+        "p50": 0.673,
+        "p95": 0.725
+      }
+    }
+  ],
+  "configuration": {
+    "api_key_env": "OACHECK_DISTRIBUTION_MOCK_KEY",
+    "base_url": "http://127.0.0.1:41653/ok/v1",
+    "checks": [
+      "models",
+      "chat",
+      "stream",
+      "stream_usage",
+      "tools",
+      "json_mode",
+      "responses",
+      "image",
+      "error_shape",
+      "latency"
+    ],
+    "include_content": false,
+    "model": "gpt-test",
+    "options": {
+      "image_url_host": null,
+      "responses_stream": true,
+      "runs": 2,
+      "tools_roundtrip": true
+    },
+    "profile": "full",
+    "prompt_chars": 22,
+    "timeout_seconds": 60.0
+  },
+  "generated_at": "2026-10-14T00:10:31Z",
+  "schema_version": "2.0",
+  "scope": "Checks protocol compatibility only. A passing report does not prove which model or provider serves the endpoint, and a single run is not an SLA.",
+  "summary": {
+    "checks_total": 10,
+    "failed": 0,
+    "passed": 10,
+    "status": "ok"
+  },
+  "tool": {
+    "name": "openai-compatible-checker",
+    "version": "2.0.0"
+  }
+}

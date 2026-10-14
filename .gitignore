@@ -29,3 +29,9 @@ reports/
 .DS_Store
 Thumbs.db
 
+
+# Local build artifacts; keep the documented offline sample in source control.
+build/
+dist/
+*.egg-info/
+!examples/report-sample.json

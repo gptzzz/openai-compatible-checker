@@ -38,7 +38,7 @@
 
 ## 跟踪变化
 
-- **定时跑。** 用仓库里的 GitHub Action 按天运行（示例见 [examples/monitor.yml](../examples/monitor.yml)），失败时会让 Job 变红，你会收到通知。报告以 artifact 形式保存，可以回看。
+- **定时跑。** 用仓库里的 GitHub Action 按天运行（示例见 [examples/monitor.yml](https://github.com/gptzzz/openai-compatible-checker/blob/main/examples/monitor.yml)），失败时会让 Job 变红，你会收到通知。报告以 artifact 形式保存，可以回看。
 - **比较报告。** 看 `summary`、每项的 `ok` 和 `error.kind` 是否变化；`content_sha256` 可以判断同一提示词的回复是否改变，但不存正文；`usage` 的数量级突然变化，值得追问服务商。
 - **记下条件。** 报告里有时间、Base URL、模型和工具版本。比较时，网络位置和时段也要一致。
 
@@ -55,4 +55,4 @@
 - 默认报告不含 Key、提示词和回复正文，Bearer Token 和常见密钥形态也会在输出前再脱敏一次。
 - 加了 `--include-content` 的报告含回复正文，可能带出提示词相关信息，不要公开。
 - 分享前仍建议自己看一遍，尤其是 `error.message`：它来自服务商的错误消息，工具只能打码已知形态的密钥。
-- 如果 Key 已经出现在截图、日志或 Issue 里，先去服务端撤销或轮换，再删除公开内容。流程见 [SECURITY.md](../SECURITY.md)。
+- 如果 Key 已经出现在截图、日志或 Issue 里，先去服务端撤销或轮换，再删除公开内容。流程见 [SECURITY.md](https://github.com/gptzzz/openai-compatible-checker/blob/main/SECURITY.md)。

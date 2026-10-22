@@ -1,0 +1,4 @@
+# Only used to build the documentation site (Read the Docs and the CI docs job).
+# The checker itself has no dependencies.
+mkdocs==1.6.1
+mkdocs-material==9.7.7

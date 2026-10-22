@@ -24,6 +24,9 @@ report-*.json
 reports/
 *.tmp
 
+# MkDocs build output
+site/
+
 .idea/
 .vscode/
 .DS_Store

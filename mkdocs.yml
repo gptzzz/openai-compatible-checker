@@ -1,0 +1,63 @@
+site_name: openai-compatible-checker
+site_description: >-
+  oacheck 文档：一条命令检查 OpenAI 兼容接口（API 中转站、自建网关、本地推理服务）的协议兼容性。
+  Docs for oacheck, a conformance checker for OpenAI-compatible APIs.
+# Read the Docs sets READTHEDOCS_CANONICAL_URL; the fallback is used for local and CI builds.
+site_url: !ENV [READTHEDOCS_CANONICAL_URL, "https://openai-compatible-checker.readthedocs.io/"]
+repo_url: https://github.com/gptzzz/openai-compatible-checker
+repo_name: gptzzz/openai-compatible-checker
+edit_uri: edit/main/docs/
+copyright: MIT License · 由 GPTZZZ 运营方维护 · 与 OpenAI 无隶属关系
+
+theme:
+  name: material
+  language: zh
+  # Use system fonts instead of loading Google Fonts in the reader's browser.
+  font: false
+  features:
+    - content.code.copy
+    - content.tabs.link
+    - navigation.footer
+    - navigation.top
+    - search.highlight
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: 切换到深色模式
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: 切换到浅色模式
+
+nav:
+  - 首页: index.md
+  - 命令行参考: cli.md
+  - GitHub Action: github-action.md
+  - 检查项详解: checks.md
+  - Codex 兼容性: codex-compatibility.md
+  - 怎样解读结果: interpreting-results.md
+  - 延迟指标: latency.md
+  - English: en.md
+
+exclude_docs: |
+  requirements.txt
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+validation:
+  omitted_files: warn
+  unrecognized_links: warn
+  anchors: warn

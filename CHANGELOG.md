@@ -6,9 +6,14 @@ All notable changes are listed here. The migration notes for 1.x users are in bo
 
 ## [Unreleased]
 
+### Added
+
+- 文档站：新增 `mkdocs.yml`、`.readthedocs.yaml` 和 `docs/requirements.txt`，用 MkDocs（Material 主题）把 `docs/` 发布到 Read the Docs；新增首页、命令行参考、GitHub Action 和英文概览四页。
+- CI 新增 `docs` 任务：`mkdocs build --strict`，文档里的坏链接和未列入导航的页面会让构建失败。
+
 ### Changed
 
-- 暂无。
+- `docs/interpreting-results.md` 里指向仓库根目录的两个相对链接（`examples/monitor.yml`、`SECURITY.md`）改为 GitHub 绝对地址，在文档站里也能打开。
 
 ## [2.0.0] - 2026-09-29
 
